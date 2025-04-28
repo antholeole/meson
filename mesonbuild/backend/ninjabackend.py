@@ -1094,27 +1094,27 @@ class NinjaBackend(backends.Backend):
                 self.add_build(elem)
 
     def should_use_dyndeps_for_target(self, target: 'build.BuildTarget') -> bool:
-        if not self.ninja_has_dyndeps:
-            return False
-        if 'fortran' in target.compilers:
-            return True
-        if 'cpp' not in target.compilers:
-            return False
-        if '-fmodules-ts' in target.extra_args['cpp']:
-            return True
-        # Currently only the preview version of Visual Studio is supported.
-        cpp = target.compilers['cpp']
-        if cpp.get_id() != 'msvc':
-            return False
-        cppversion = self.get_target_option(target, OptionKey('cpp_std',
-                                                              machine=target.for_machine,
-                                                              subproject=target.subproject))
-        if cppversion not in ('latest', 'c++latest', 'vc++latest'):
-            return False
-        if not mesonlib.current_vs_supports_modules():
-            return False
-        if mesonlib.version_compare(cpp.version, '<19.28.28617'):
-            return False
+        # if not self.ninja_has_dyndeps:
+        #     return False
+        # if 'fortran' in target.compilers:
+        #     return True
+        # if 'cpp' not in target.compilers:
+        #     return False
+        # if '-fmodules-ts' in target.extra_args['cpp']:
+        #     return True
+        # # Currently only the preview version of Visual Studio is supported.
+        # cpp = target.compilers['cpp']
+        # if cpp.get_id() != 'msvc':
+        #     return False
+        # cppversion = self.get_target_option(target, OptionKey('cpp_std',
+        #                                                       machine=target.for_machine,
+        #                                                       subproject=target.subproject))
+        # if cppversion not in ('latest', 'c++latest', 'vc++latest'):
+        #     return False
+        # if not mesonlib.current_vs_supports_modules():
+        #     return False
+        # if mesonlib.version_compare(cpp.version, '<19.28.28617'):
+        print("dynadep called!")
         return True
 
     def generate_dependency_scan_target(self, target: build.BuildTarget,
